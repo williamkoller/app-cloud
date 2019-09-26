@@ -28,17 +28,7 @@ class HomeController extends Controller
     {
         $home = new Home();
 
-        return view('home::create', compact('home'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('home::_form', compact('home'));
     }
 
     /**
@@ -55,7 +45,7 @@ class HomeController extends Controller
         $home->description = $request->description;
         $home->save();
 
-        return redirect(route('admin.home.list'))->with('status', 'O Home'.$home->name.' foi salvo com sucesso!!');
+        return redirect(route('admin.home.list'))->with('status', 'O Home '.$home->name.' foi salvo com sucesso!!');
     }
 
     /**
@@ -67,7 +57,7 @@ class HomeController extends Controller
     {
         $home = Home::find($id);
 
-        return view('home::edit', compact('home'));
+        return view('home::_form', compact('home'));
     }
 
     /**
@@ -102,6 +92,6 @@ class HomeController extends Controller
         $home->description = $request->description;
         $home->delete();
 
-        return redirect(route('admin.home.list'))->with('status', 'O Home'.$home->name.' foi deletado com sucesso!!');
+        return redirect(route('admin.home.list'))->with('status', 'O Home '.$home->name.' foi deletado com sucesso!!');
     }
 }
