@@ -5,6 +5,7 @@ namespace Modules\Home\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Home\Entities\Home;
 
 class HomeController extends Controller
 {
@@ -12,9 +13,11 @@ class HomeController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function list()
     {
-        return view('home::index');
+        $homes = Home::all();
+
+        return view('home::list', compact('homes'));
     }
 
     /**
@@ -23,7 +26,9 @@ class HomeController extends Controller
      */
     public function create()
     {
-        return view('home::create');
+        $home = new Home();
+
+        return view('home::create', compact('home'));
     }
 
     /**
@@ -41,9 +46,16 @@ class HomeController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function doCreate(Request $request)
     {
-        return view('home::show');
+        $home = new Home;
+
+        $home->name = $request->name;
+        $home->title = $request->title;
+        $home->description = $request->description;
+        $home->save();
+
+        return redirect(route('admin.home.list'))->with('status', 'O Home'.$home->name.' foi salvo com sucesso!!');
     }
 
     /**
@@ -53,7 +65,9 @@ class HomeController extends Controller
      */
     public function edit($id)
     {
-        return view('home::edit');
+        $home = Home::find($id);
+
+        return view('home::edit', compact('home'));
     }
 
     /**
@@ -64,7 +78,14 @@ class HomeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $home = Home::find($id);
+
+        $home->name = $request->name;
+        $home->title = $request->title;
+        $home->description = $request->description;
+        $home->save();
+
+        return redirect(route('admin.home.list'))->with('status', 'O Home '.$home->name.' foi salvo com sucesso!!');
     }
 
     /**
@@ -72,8 +93,15 @@ class HomeController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $home = Home::find($id);
+
+        $home->name = $request->name;
+        $home->title = $request->title;
+        $home->description = $request->description;
+        $home->delete();
+
+        return redirect(route('admin.home.list'))->with('status', 'O Home'.$home->name.' foi deletado com sucesso!!');
     }
 }
