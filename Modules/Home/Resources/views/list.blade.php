@@ -1,9 +1,11 @@
 @extends('home::layouts.master')
 
 @section('content')
-    <h1>Hello World</h1>
+   <div class="container-fluid">
+       <div class="row">
+           <h2>Hello home</h2>
 
-    <p>
-        This view is loaded from module: {!! config('home.name') !!}
-    </p>
+       </div>
+   </div>
+
 @endsection
